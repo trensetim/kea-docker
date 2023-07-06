@@ -8,17 +8,19 @@
 version: '3'
 
 services:
-  dhcpd:
-    container_name: kea-dhcpd
-    image: registry.gitlab.isc.org/isc-projects/kea:latest
-	restart: unless-stopped
-	network_mode: host
-	# enable debugging
-	# command: -d
+  dhcp4:
+    container_name: kea
+    image: docker-registry.gitlab.timtrense.com/tim/kea-docker:latest
+    restart: unless-stopped
+    network_mode: host
+    # enable debugging
+    # command: -d
     volumes:
-	  # provide an empty ./var folder for kea to persist its lease file
+      # provide an empty ./var folder for kea to persist its lease file
       - ./var:/var/lib/kea
-	  # place your "dhcp4.json" configuration file into the ./etc folder
+      # provide an empty ./run folder for kea to export its UNIX control socket to
+      - ./run:/var/run/kea
+      # place your "dhcp4.json" configuration file into the ./etc folder
       - ./etc:/etc/kea:ro
 
 ```
