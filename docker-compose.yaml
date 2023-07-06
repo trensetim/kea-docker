@@ -1,13 +1,26 @@
 version: '3'
 
 services:
-  stork:
+  dhcp4:
     build: 
       context: .
       dockerfile: Dockerfile
+    container_name: kea-dhcp4
+    restart: unless-stopped
     ports:
       - 67:67/udp
       - 68:68/udp
     volumes:
-      - ./dhcp4.json:/etc/kea:ro
+      - ./etc/kea:/etc/kea:ro
       - ./.local/var:/var/lib/kea
+      - ./.local/run:/var/run/kea
+  prometheus-exporter:
+    build: 
+      context: .
+      dockerfile: prometheus-exporter.Dockerfile
+    container_name: kea-exporter
+    restart: unless-stopped
+    ports:
+      - 9500:9500
+    volumes:
+      - ./.local/run:/var/run/kea
