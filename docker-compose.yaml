@@ -1,0 +1,13 @@
+version: '3'
+
+services:
+  stork:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 67:67/udp
+      - 68:68/udp
+    volumes:
+      - ./dhcp4.json:/etc/kea:ro
+      - ./.local/var:/var/lib/kea
