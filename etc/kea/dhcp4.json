@@ -1,0 +1,61 @@
+{
+	"Dhcp4": {
+		"valid-lifetime": 4000,
+		"renew-timer": 1000,
+		"rebind-timer": 2000,
+		"interfaces-config": {
+			"interfaces": [
+				"eth0"
+			]
+		},
+		"control-socket": {
+			"socket-type": "unix",
+			"socket-name": "/run/kea/dhcp4.sock"
+		},
+		"lease-database": {
+			"type": "memfile",
+			"persist": true,
+			"name": "/var/lib/kea/dhcp4.leases.csv",
+			"lfc-interval": 3600
+		},
+		"subnet4": [
+			{
+				"subnet": "192.168.1.0/24",
+				"pools": [
+					{
+						"pool": "192.168.1.100 - 192.168.1.200"
+					}
+				],
+				"option-data": [
+					{
+						"name": "routers",
+						"always-send": true,
+						"data": "192.168.1.1"
+					},
+					{
+						"name": "broadcast-address",
+						"always-send": true,
+						"data": "192.168.1.255"
+					},
+					{
+						"name": "domain-name-servers",
+						"always-send": true,
+						"data": "192.168.1.1"
+					},
+					{
+						"name": "ntp-servers",
+						"always-send": true,
+						"data": "192.168.1.1"
+					}
+				],
+				"reservations": [
+					{
+						"hw-address": "00:11:22:33:aa:bb",
+						"ip-address": "192.168.1.123",
+						"hostname": "my-device"
+					}
+				]
+			}
+		]
+	}
+}
