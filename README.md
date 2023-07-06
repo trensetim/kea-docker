@@ -22,6 +22,15 @@ services:
       - ./run:/var/run/kea
       # place your "dhcp4.json" configuration file into the ./etc folder
       - ./etc:/etc/kea:ro
+  prometheus-exporter:
+    container_name: kea-prometheus-exporter
+    image: docker-registry.gitlab.timtrense.com/tim/kea-docker/prometheus-exporter:latest
+    restart: unless-stopped
+    ports:
+      - 9500:9500
+    volumes:
+      # provide the mounted run folder of kea to get this container access to its control socket
+      - ./run:/var/run/kea
 
 ```
 1. Run the container `docker-compose up -d`
