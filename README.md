@@ -10,7 +10,7 @@ version: '3'
 services:
   dhcp4:
     container_name: kea
-    image: docker-registry.gitlab.timtrense.com/tim/kea-docker:latest
+    image: docker-registry.timtrense.com/tim/kea-docker:latest
     restart: unless-stopped
     network_mode: host
     # enable debugging
@@ -24,7 +24,7 @@ services:
       - ./etc:/etc/kea:ro
   prometheus-exporter:
     container_name: kea-prometheus-exporter
-    image: docker-registry.gitlab.timtrense.com/tim/kea-docker/prometheus-exporter:latest
+    image: docker-registry.timtrense.com/tim/kea-docker/prometheus-exporter:latest
     restart: unless-stopped
     ports:
       - 9500:9500
