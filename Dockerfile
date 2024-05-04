@@ -1,9 +1,6 @@
-FROM debian:bullseye
+FROM debian:bookworm
 
-RUN apt-get update && apt-get -y install debian-keyring debian-archive-keyring apt-transport-https curl openssl
-RUN curl -1sLf 'https://dl.cloudsmith.io/public/isc/kea-2-2/gpg.A8CB727C62565FF8.key' |  gpg --dearmor > /usr/share/keyrings/isc-kea-2-2-archive-keyring.gpg
-RUN curl -1sLf 'https://dl.cloudsmith.io/public/isc/kea-2-2/config.deb.txt?distro=debian&codename=bullseye' > /etc/apt/sources.list.d/isc-kea-2-2.list
-RUN apt-get update && apt-get -y install isc-kea-dhcp4-server
+RUN apt-get update && apt-get -y install kea-dhcp4-server
 RUN apt-get clean
 
 RUN mkdir -p /run/kea \
