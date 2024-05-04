@@ -5,8 +5,6 @@
 1. Create the required configuration files ([Kea DHCPv4](sample-etc/kea/dhcp4.json))
 1. Create a docker-compose file
 ```yaml
-version: '3'
-
 services:
   dhcp4:
     container_name: kea
