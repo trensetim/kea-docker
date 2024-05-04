@@ -5,16 +5,14 @@ before_script:
     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
 
 build_image:
-    only:
-        - main
     tags:
         - docker
     script:
         # always build latest
-        - docker build -t $CI_REGISTRY/$CI_PROJECT_PATH .
-        - docker build -t $CI_REGISTRY/$CI_PROJECT_PATH/prometheus-exporter .
-        - docker push $CI_REGISTRY/$CI_PROJECT_PATH
-        - docker push $CI_REGISTRY/$CI_PROJECT_PATH/prometheus-exporter
+        - PLATFORMS="linux/arm/v7,linux/arm64,linux/amd64"
+        - docker buildx create --name multiarch --driver docker-container --use
+        - docker buildx build --push --platform $PLATFORMS --tag $CI_REGISTRY/$CI_PROJECT_PATH .
+        - docker buildx build --push --platform $PLATFORMS --tag $CI_REGISTRY/$CI_PROJECT_PATH/prometheus-exporter --file prometheus-export.Dockerfile .
 
         # build tagged images if commit is a git tag
         - |
